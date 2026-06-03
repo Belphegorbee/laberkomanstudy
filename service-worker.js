@@ -1,44 +1,21 @@
-const CACHE_NAME = "LABERKOMANSTUDY";
+const CACHE_NAME = "laberkoman";
 
 const urlsToCache = [
-  "icon-912.png",
-  "icon-512.png",
-  "index.html",
-  "manifest.json"
+  "/laberkomanstudy/",
+  "/laberkomanstudy/index.html",
+  "/laberkomanstudy/BEBAS.html",
+  "/laberkomanstudy/FILSAFAT.html",
+  "/laberkomanstudy/INVESTASI.html"
 ];
 
-self.addEventListener("install", event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
+self.addEventListener("install", e => {
+  e.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
   );
 });
 
-self.addEventListener("activate", event => {
-  event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys.map(key => {
-          if(key !== CACHE_NAME){
-            return caches.delete(key);
-          }
-        })
-      )
-    )
+self.addEventListener("fetch", e => {
+  e.respondWith(
+    fetch(e.request).catch(() => caches.match("/busu/index.html"))
   );
-});
-
-self.addEventListener("fetch", event => {
-
-  if(event.request.method !== "GET"){
-    return;
-  }
-
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        return response || fetch(event.request);
-      })
-  );
-
 });
