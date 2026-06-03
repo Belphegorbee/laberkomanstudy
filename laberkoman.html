@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b1220">
+<meta charset="UTF-8">
+<title>System Dashboard Pro</title>
+
+<style>
+:root{
+  --bg:#07080a;
+  --panel:#0e0f13;
+  --panel2:#0b0c10;
+
+  --text:#eaf2ff;
+  --muted:#7a8aa0;
+
+  --blue:#3b82f6;
+  --cyan:#22d3ee;
+  --green:#22c55e;
+  --red:#ef4444;
+
+  --radius:14px;
+}
+
+/* RESET */
+*{
+  box-sizing:border-box;
+  font-family:Inter, Arial, sans-serif;
+  user-select:none;
+  margin:0;
+  padding:0;
+}
+
+body{
+  background:radial-gradient(circle at top,#0b1220,#07080a);
+  color:var(--text);
+  padding:14px;
+  overflow:hidden;
+}
+
+/* HEADER */
+.header{
+  text-align:center;
+  padding:14px;
+  border-radius:var(--radius);
+  background:linear-gradient(145deg,#0e0f13,#0a0b0f);
+  border:1px solid rgba(59,130,246,0.5);
+}
+
+.title{
+  font-size:18px;
+  font-weight:800;
+  letter-spacing:2px;
+  text-shadow:0 0 6px rgba(34,197,94,0.3);
+}
+
+.sub{
+  font-size:11px;
+  color:var(--muted);
+}
+
+/* NAV */
+.nav{
+  display:flex;
+  gap:8px;
+  margin:10px 0;
+}
+
+.nav button{
+  flex:1;
+  padding:10px;
+  border-radius:12px;
+  border:1px solid rgba(59,130,246,0.5);
+  background:transparent;
+  color:#fff;
+  font-size:12px;
+}
+
+.nav button.active{
+  background:rgba(59,130,246,0.2);
+  border-color:var(--cyan);
+}
+
+/* SWIPE */
+.swipe-wrap{overflow:hidden;}
+.swipe{
+  display:flex;
+  width:200%;
+  transition:.35s;
+}
+.page{width:50%;padding-right:10px;}
+
+/* SECTION TITLE */
+.section-title{
+  text-align:center;
+  font-size:18px;
+  font-weight:800;
+  margin:10px 0;
+  letter-spacing:1px;
+}
+
+/* PANEL */
+.panel{
+  background:var(--panel);
+  border-radius:var(--radius);
+  padding:12px;
+  border:1px solid rgba(59,130,246,0.3);
+}
+
+/* GRID */
+.layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+/* QUOTE */
+.quote-box{
+  text-align:center;
+  padding:12px;
+  border-radius:12px;
+  margin:10px 0;
+  background:rgba(34,211,238,0.05);
+  border:1px solid rgba(34,211,238,0.2);
+}
+
+.quote{
+  font-size:14px;
+  font-style:italic;
+  color:#a5f3fc;
+}
+
+/* CIRCLE RING */
+.ring{
+  width:90px;
+  height:90px;
+  margin:auto;
+}
+
+circle{
+  fill:none;
+  stroke-width:8;
+  transform:rotate(-90deg);
+  transform-origin:50% 50%;
+}
+
+.bg{
+  stroke:#1a1a1a;
+}
+
+.progress{
+  stroke-linecap:round;
+  transition:stroke-dashoffset 1s ease;
+}
+
+/* CENTER TEXT */
+.ring-text{
+  text-align:center;
+  margin-top:-65px;
+  font-weight:700;
+}
+
+/* STATS GRID */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  text-align:center;
+}
+
+.stat{
+  padding:10px;
+}
+
+/* TASK */
+.task{
+  background:var(--panel2);
+  padding:10px;
+  border-radius:12px;
+  margin-bottom:10px;
+}
+
+.task-title{
+  text-align:center;
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+.actions{
+  display:flex;
+  gap:6px;
+}
+
+button{
+  flex:1;
+  padding:10px;
+  border-radius:10px;
+  border:none;
+}
+
+.do{color:#22c55e;border:1px solid #22c55e;background:rgba(34,197,94,0.1);}
+.fail{color:#ef4444;border:1px solid #ef4444;background:rgba(239,68,68,0.1);}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="title">SYSTEM DASHBOARD PRO</div>
+  <div class="sub">discipline • execution • tracking system</div>
+</div>
+
+<div class="nav">
+  <button class="active" id="b0" onclick="go(0)">Dashboard</button>
+  <button id="b1" onclick="go(1)">Tasks</button>
+</div>
+
+<div class="quote-box">
+  <div class="quote" id="quote">...</div>
+</div>
+
+<div class="swipe-wrap">
+<div class="swipe" id="swipe">
+
+<!-- DASHBOARD -->
+<div class="page">
+
+<div class="section-title">GLOBAL PERFORMANCE</div>
+
+<div class="panel">
+  <div id="global" class="stats"></div>
+</div>
+
+<div class="layout">
+
+<div class="panel">
+  <div class="section-title">TODAY STATUS</div>
+  <div id="today"></div>
+</div>
+
+<div class="panel">
+  <div class="section-title">SHEET PROGRESS</div>
+  <div id="progress"></div>
+</div>
+
+</div>
+
+</div>
+
+<!-- TASK -->
+<div class="page">
+
+<div class="panel">
+  <div class="section-title">OPEN TASKS</div>
+  <div id="tasks"></div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<script>
+const URL="https://script.google.com/macros/s/AKfycbwtE8suaeLY1bn3Bt4oHlEzQJ4tJaSlPCqYWLJUZMnQwELmw-NP5ingYQQ3yG1yxSaA/exec";
+
+function circle(percent,color){
+const r=32;
+const c=2*Math.PI*r;
+return `
+<svg class="ring">
+<circle class="bg" r="${r}" cx="45" cy="45"/>
+<circle class="progress"
+r="${r}" cx="45" cy="45"
+stroke="${color}"
+stroke-dasharray="${c}"
+stroke-dashoffset="${c-(percent/100)*c}"/>
+</svg>
+`;
+}
+
+function go(i){
+document.getElementById("swipe").style.transform=`translateX(-${i*50}%)`;
+document.getElementById("b0").classList.remove("active");
+document.getElementById("b1").classList.remove("active");
+document.getElementById("b"+i).classList.add("active");
+}
+
+fetch(URL).then(r=>r.json()).then(d=>{
+
+document.getElementById("quote").innerText="💡 "+d.quote;
+
+/* GLOBAL RING */
+const g=d.global;
+document.getElementById("global").innerHTML=`
+<div>${circle(g.percent,"#22d3ee")}</div>
+<div class="ring-text">${g.percent}%</div>
+<div class="stats">
+<div class="stat">S<br><b>${g.success}</b></div>
+<div class="stat">F<br><b>${g.fail}</b></div>
+<div class="stat">O<br><b>${g.open}</b></div>
+</div>
+`;
+
+/* TODAY RING */
+const t=d.today;
+let col=t.status==="WIN"?"#22c55e":t.status==="LOSS"?"#ef4444":"#fbbf24";
+document.getElementById("today").innerHTML=`
+<div style="text-align:center">
+${circle(t.success/(t.success+t.fail)*100,col)}
+<div class="ring-text">${t.status}</div>
+</div>
+<div style="text-align:center;font-size:12px;margin-top:8px">
+S:${t.success} F:${t.fail}<br>STREAK ${t.streak}
+</div>
+`;
+
+/* PROGRESS */
+const p=document.getElementById("progress");
+
+d.progress.forEach(x=>{
+const el=document.createElement("div");
+el.innerHTML=`
+<div style="text-align:center;font-size:12px;margin-top:10px">${x.sheet}</div>
+<div style="text-align:center">${circle(x.percent,"#3b82f6")}</div>
+<div style="text-align:center;font-size:12px">${x.percent}%</div>
+`;
+p.appendChild(el);
+});
+
+/* TASK */
+const tsk=document.getElementById("tasks");
+
+d.tasks.forEach(x=>{
+const el=document.createElement("div");
+el.className="task";
+
+el.innerHTML=`
+<div class="task-title">📌 ${x.sheet}</div>
+<div style="text-align:center;font-size:12px">${x.judul||"-"}</div>
+
+<div class="actions">
+<button class="do">DO IT</button>
+<button class="fail">FAIL</button>
+</div>
+`;
+
+el.querySelector(".do").onclick=()=>{
+window.location.href=x.sheet.toUpperCase()+".html";
+};
+
+el.querySelector(".fail").onclick=()=>{
+fetch(URL,{
+method:"POST",
+body:JSON.stringify({
+action:"fail",
+sheet:x.sheet,
+tanggal:x.tanggal
+})
+}).then(()=>location.reload());
+};
+
+tsk.appendChild(el);
+});
+
+});
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js")
+      .then(reg => console.log("SW Registered"))
+      .catch(err => console.log("SW Error", err));
+  });
+}
+</script>
+
+</body>
+</html>
