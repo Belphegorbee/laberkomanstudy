@@ -1,9 +1,10 @@
 const CACHE_NAME = "LABERKOMANSTUDY";
 
 const urlsToCache = [
-  "./",
-  "./index.html",
-  "./manifest.json"
+  "icon-912.png",
+  "icon-512.png",
+  "index.html",
+  "manifest.json"
 ];
 
 self.addEventListener("install", event => {
