@@ -386,11 +386,7 @@ tsk.appendChild(el);
 </script>
 <script>
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js")
-      .then(reg => console.log("SW Registered"))
-      .catch(err => console.log("SW Error", err));
-  });
+  navigator.serviceWorker.register("service-worker.js");
 }
 </script>
 
