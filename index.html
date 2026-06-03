@@ -346,7 +346,26 @@ el.innerHTML=`
 `;
 
 el.querySelector(".do").onclick=()=>{
-window.location.href=x.sheet.toUpperCase()+".html";
+
+const pages={
+  "FILSAFAT":"FILSAFAT.HTML",
+  "BEBAS":"BEBAS.HTML",
+  "INVESTASI":"INVESTASI.HTML",
+  "KONTEN":"KONTEN.HTML",
+  "PROGRAM":"PROGRAM.HTML",
+  "SCM":"SCM.HTML",
+  "TRIK":"TRIK.HTML"
+};
+
+const sheet=x.sheet.trim().toUpperCase();
+const target=pages[sheet];
+
+if(target){
+  window.location.href="./"+target;
+}else{
+  alert("Halaman tidak ditemukan : "+sheet);
+}
+
 };
 
 el.querySelector(".fail").onclick=()=>{
