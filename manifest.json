@@ -1,7 +1,7 @@
 {
   "name": "LABERKOMAN",
   "short_name": "STUDY",
-  "start_url": "/index.html",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#f4f6f8",
   "theme_color": "#2e7d32",
