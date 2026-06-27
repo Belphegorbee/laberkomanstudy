@@ -4,203 +4,300 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0b1220">
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>System Dashboard Pro</title>
 
 <style>
 :root{
   --bg:#07080a;
   --panel:#0e0f13;
-  --panel2:#0b0c10;
+  --panel2:#14161d;
 
   --text:#eaf2ff;
-  --muted:#7a8aa0;
+  --muted:#94a3b8;
 
   --blue:#3b82f6;
   --cyan:#22d3ee;
   --green:#22c55e;
   --red:#ef4444;
 
-  --radius:14px;
+  --radius:16px;
 }
 
-/* RESET */
+/* RESET & BASE */
 *{
   box-sizing:border-box;
-  font-family:Inter, Arial, sans-serif;
+  font-family: 'Inter', Arial, sans-serif;
   user-select:none;
   margin:0;
   padding:0;
 }
 
 body{
-  background:radial-gradient(circle at top,#0b1220,#07080a);
-  color:var(--text);
-  padding:14px;
-  overflow:hidden;
+  background: radial-gradient(circle at top, #0f172a, #07080a);
+  color: var(--text);
+  padding: 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 100vh;
+  line-height: 1.6;
 }
 
 /* HEADER */
 .header{
   text-align:center;
-  padding:14px;
+  padding:24px 16px;
   border-radius:var(--radius);
-  background:linear-gradient(145deg,#0e0f13,#0a0b0f);
-  border:1px solid rgba(59,130,246,0.5);
+  background: linear-gradient(145deg, #0e0f13, #07080a);
+  border: 1px solid rgba(59,130,246,0.3);
+  margin-bottom: 20px;
 }
 
 .title{
-  font-size:18px;
-  font-weight:800;
+  font-size:24px;
+  font-weight:900;
   letter-spacing:2px;
-  text-shadow:0 0 6px rgba(34,197,94,0.3);
+  color: #fff;
+  text-shadow: 0 0 10px rgba(59,130,246,0.5);
 }
 
 .sub{
-  font-size:11px;
+  font-size:13px;
   color:var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 6px;
 }
 
 /* NAV */
 .nav{
   display:flex;
-  gap:8px;
-  margin:10px 0;
+  gap:12px;
+  margin-bottom: 20px;
 }
 
 .nav button{
   flex:1;
-  padding:10px;
+  padding:14px;
   border-radius:12px;
-  border:1px solid rgba(59,130,246,0.5);
-  background:transparent;
-  color:#fff;
-  font-size:12px;
+  border:1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
+  color: var(--muted);
+  font-size:16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .nav button.active{
-  background:rgba(59,130,246,0.2);
-  border-color:var(--cyan);
+  background: rgba(59,130,246,0.15);
+  border-color: var(--cyan);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(34,211,238,0.2);
 }
 
-/* SWIPE */
-.swipe-wrap{overflow:hidden;}
+/* SWIPE & PAGES */
+.swipe-wrap{
+  overflow: hidden;
+  width: 100%;
+}
+
 .swipe{
   display:flex;
   width:200%;
-  transition:.35s;
+  transition: transform .35s cubic-bezier(0.4, 0, 0.2, 1);
+  align-items: flex-start;
 }
-.page{width:50%;padding-right:10px;}
+
+.page{
+  width:50%;
+  padding: 4px;
+}
 
 /* SECTION TITLE */
 .section-title{
   text-align:center;
   font-size:18px;
   font-weight:800;
-  margin:10px 0;
+  margin: 10px 0 16px 0;
   letter-spacing:1px;
+  color: var(--cyan);
+  text-transform: uppercase;
 }
 
 /* PANEL */
 .panel{
-  background:var(--panel);
-  border-radius:var(--radius);
-  padding:12px;
-  border:1px solid rgba(59,130,246,0.3);
+  background: var(--panel);
+  border-radius: var(--radius);
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 
-/* GRID */
+/* GRID LAYOUTS */
 .layout{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media(min-width: 650px) {
+  .layout {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* QUOTE */
 .quote-box{
-  text-align:center;
-  padding:12px;
-  border-radius:12px;
-  margin:10px 0;
-  background:rgba(34,211,238,0.05);
-  border:1px solid rgba(34,211,238,0.2);
+  text-align: center;
+  padding: 16px;
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  background: rgba(34,211,238,0.03);
+  border: 1px solid rgba(34,211,238,0.15);
 }
 
 .quote{
-  font-size:14px;
-  font-style:italic;
-  color:#a5f3fc;
+  font-size: 16px;
+  font-style: italic;
+  color: #bae6fd;
 }
 
-/* CIRCLE RING */
+/* RING SVG CONTAINER */
+.ring-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px auto;
+}
+
 .ring{
-  width:90px;
-  height:90px;
-  margin:auto;
+  width: 110px;
+  height: 110px;
 }
 
 circle{
-  fill:none;
-  stroke-width:8;
-  transform:rotate(-90deg);
-  transform-origin:50% 50%;
+  fill: none;
+  stroke-width: 8;
+  transform: rotate(-90deg);
+  transform-origin: 50px 50px;
 }
 
 .bg{
-  stroke:#1a1a1a;
+  stroke: #1e293b;
 }
 
 .progress{
-  stroke-linecap:round;
-  transition:stroke-dashoffset 1s ease;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* CENTER TEXT */
-.ring-text{
-  text-align:center;
-  margin-top:-65px;
-  font-weight:700;
+/* GLOBAL STATS ALIGNMENT */
+.global-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
 
-/* STATS GRID */
 .stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  text-align:center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
 }
 
 .stat{
-  padding:10px;
+  background: rgba(255,255,255,0.02);
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--muted);
 }
 
-/* TASK */
+.stat b{
+  font-size: 18px;
+  color: #fff;
+  display: block;
+  margin-top: 2px;
+}
+
+/* PROGRESS LIST CONTAINER */
+#progress {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.progress-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.02);
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.03);
+}
+
+.progress-info {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* TASKS */
+#tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
 .task{
-  background:var(--panel2);
-  padding:10px;
-  border-radius:12px;
-  margin-bottom:10px;
+  background: var(--panel2);
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.05);
 }
 
 .task-title{
-  text-align:center;
-  font-weight:700;
-  margin-bottom:6px;
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--cyan);
+  margin-bottom: 4px;
+}
+
+.task-desc {
+  font-size: 15px;
+  color: var(--muted);
+  margin-bottom: 16px;
 }
 
 .actions{
-  display:flex;
-  gap:6px;
+  display: flex;
+  gap: 12px;
 }
 
-button{
-  flex:1;
-  padding:10px;
-  border-radius:10px;
-  border:none;
+.actions button{
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
 }
 
-.do{color:#22c55e;border:1px solid #22c55e;background:rgba(34,197,94,0.1);}
-.fail{color:#ef4444;border:1px solid #ef4444;background:rgba(239,68,68,0.1);}
+.actions button:active {
+  opacity: 0.7;
+}
+
+.do { color: #fff; background: var(--green); }
+.fail { color: #fff; background: var(--red); }
 </style>
 </head>
 
@@ -223,39 +320,30 @@ button{
 <div class="swipe-wrap">
 <div class="swipe" id="swipe">
 
-<!-- DASHBOARD -->
 <div class="page">
+  <div class="section-title">GLOBAL PERFORMANCE</div>
+  <div class="panel">
+    <div id="global" class="global-box"></div>
+  </div>
 
-<div class="section-title">GLOBAL PERFORMANCE</div>
+  <div class="layout">
+    <div class="panel">
+      <div class="section-title">TODAY STATUS</div>
+      <div id="today"></div>
+    </div>
 
-<div class="panel">
-  <div id="global" class="stats"></div>
+    <div class="panel">
+      <div class="section-title">SHEET PROGRESS</div>
+      <div id="progress"></div>
+    </div>
+  </div>
 </div>
 
-<div class="layout">
-
-<div class="panel">
-  <div class="section-title">TODAY STATUS</div>
-  <div id="today"></div>
-</div>
-
-<div class="panel">
-  <div class="section-title">SHEET PROGRESS</div>
-  <div id="progress"></div>
-</div>
-
-</div>
-
-</div>
-
-<!-- TASK -->
 <div class="page">
-
-<div class="panel">
-  <div class="section-title">OPEN TASKS</div>
-  <div id="tasks"></div>
-</div>
-
+  <div class="panel">
+    <div class="section-title">OPEN TASKS</div>
+    <div id="tasks"></div>
+  </div>
 </div>
 
 </div>
@@ -264,18 +352,22 @@ button{
 <script>
 const URL="https://script.google.com/macros/s/AKfycbwtE8suaeLY1bn3Bt4oHlEzQJ4tJaSlPCqYWLJUZMnQwELmw-NP5ingYQQ3yG1yxSaA/exec";
 
-function circle(percent,color){
+// Modifikasi struktur lingkaran menggunakan tag <text> internal SVG agar presisi di tengah
+function circle(percent, color, label = percent + "%"){
 const r=32;
 const c=2*Math.PI*r;
 return `
-<svg class="ring">
-<circle class="bg" r="${r}" cx="45" cy="45"/>
-<circle class="progress"
-r="${r}" cx="45" cy="45"
-stroke="${color}"
-stroke-dasharray="${c}"
-stroke-dashoffset="${c-(percent/100)*c}"/>
+<div class="ring-container">
+<svg class="ring" viewBox="0 0 100 100">
+  <circle class="bg" r="${r}" cx="50" cy="50"/>
+  <circle class="progress"
+    r="${r}" cx="50" cy="50"
+    stroke="${color}"
+    stroke-dasharray="${c}"
+    stroke-dashoffset="${c-(percent/100)*c}"/>
+  <text x="50" y="54" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">${label}</text>
 </svg>
+</div>
 `;
 }
 
@@ -293,12 +385,11 @@ document.getElementById("quote").innerText="💡 "+d.quote;
 /* GLOBAL RING */
 const g=d.global;
 document.getElementById("global").innerHTML=`
-<div>${circle(g.percent,"#22d3ee")}</div>
-<div class="ring-text">${g.percent}%</div>
+${circle(g.percent,"#22d3ee")}
 <div class="stats">
-<div class="stat">S<br><b>${g.success}</b></div>
-<div class="stat">F<br><b>${g.fail}</b></div>
-<div class="stat">O<br><b>${g.open}</b></div>
+  <div class="stat">SUCCESS<br><b>${g.success}</b></div>
+  <div class="stat">FAIL<br><b>${g.fail}</b></div>
+  <div class="stat">OPEN<br><b>${g.open}</b></div>
 </div>
 `;
 
@@ -306,30 +397,40 @@ document.getElementById("global").innerHTML=`
 const t=d.today;
 let col=t.status==="WIN"?"#22c55e":t.status==="LOSS"?"#ef4444":"#fbbf24";
 document.getElementById("today").innerHTML=`
-<div style="text-align:center">
-${circle(t.success/(t.success+t.fail)*100,col)}
-<div class="ring-text">${t.status}</div>
-</div>
-<div style="text-align:center;font-size:12px;margin-top:8px">
-S:${t.success} F:${t.fail}<br>STREAK ${t.streak}
+${circle(t.success/(t.success+t.fail)*100, col, t.status)}
+<div style="text-align:center; font-size:15px; margin-top:12px; background: rgba(255,255,255,0.02); padding: 8px; border-radius: 8px;">
+  S: <span style="color:var(--green); font-weight:bold">${t.success}</span> &nbsp;|&nbsp; 
+  F: <span style="color:var(--red); font-weight:bold">${t.fail}</span> &nbsp;|&nbsp; 
+  <span style="color:#fbbf24; font-weight:bold">STREAK ${t.streak}</span>
 </div>
 `;
 
 /* PROGRESS */
 const p=document.getElementById("progress");
+p.innerHTML = ""; // Clear loader text
 
 d.progress.forEach(x=>{
 const el=document.createElement("div");
+el.className = "progress-item";
 el.innerHTML=`
-<div style="text-align:center;font-size:12px;margin-top:10px">${x.sheet}</div>
-<div style="text-align:center">${circle(x.percent,"#3b82f6")}</div>
-<div style="text-align:center;font-size:12px">${x.percent}%</div>
+<div class="progress-info">${x.sheet}</div>
+<div style="width: 60px; height: 60px; margin: 0;">
+  <svg viewBox="0 0 100 100" style="width:100%; height:100%;">
+    <circle class="bg" r="32" cx="50" cy="50" stroke-width="10"/>
+    <circle class="progress" r="32" cx="50" cy="50" stroke-width="10"
+      stroke="#3b82f6"
+      stroke-dasharray="${2*Math.PI*32}"
+      stroke-dashoffset="${(2*Math.PI*32)-((x.percent/100)*(2*Math.PI*32))}"/>
+    <text x="50" y="55" fill="#ffffff" font-size="16" font-weight="bold" text-anchor="middle">${x.percent}%</text>
+  </svg>
+</div>
 `;
 p.appendChild(el);
 });
 
 /* TASK */
 const tsk=document.getElementById("tasks");
+tsk.innerHTML = ""; // Clear loader text
 
 d.tasks.forEach(x=>{
 const el=document.createElement("div");
@@ -337,16 +438,15 @@ el.className="task";
 
 el.innerHTML=`
 <div class="task-title">${x.sheet}</div>
-<div style="text-align:center;font-size:12px">${x.judul||"-"}</div>
+<div class="task-desc">${x.judul||"-"}</div>
 
 <div class="actions">
-<button class="do">DO IT</button>
-<button class="fail">FAIL</button>
+  <button class="do">DO IT</button>
+  <button class="fail">FAIL</button>
 </div>
 `;
 
 el.querySelector(".do").onclick=()=>{
-
 const pages={
   "FILSAFAT":"FILSAFAT.HTML",
   "BEBAS":"BEBAS.HTML",
@@ -365,7 +465,6 @@ if(target){
 }else{
   alert("Halaman tidak ditemukan : "+sheet);
 }
-
 };
 
 el.querySelector(".fail").onclick=()=>{
@@ -391,4 +490,4 @@ if ("serviceWorker" in navigator) {
 </script>
 
 </body>
-</html>
+</html
